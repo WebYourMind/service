@@ -9,9 +9,7 @@ const { setIfValue, setToArray, addArrayToSet, buildSourceUrl, updateSourceLocat
 const minimatch = require('minimatch')
 const he = require('he')
 const extend = require('extend')
-const definitionSchema = require('../schemas/definition')
-const Ajv = require('ajv')
-const ajv = new Ajv({ allErrors: true })
+const validator = require('../schemas/validator')
 
 const currentSchema = '1.0.0'
 
@@ -110,7 +108,7 @@ class DefinitionService {
   }
 
   _validate(definition) {
-    if (!ajv.validate(definitionSchema, definition)) throw new Error(ajv.errorsText())
+    if (!validator.validate('definition', definition)) throw new Error(validator.errorsText())
   }
 
   async computeAndStore(coordinates) {
