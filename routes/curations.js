@@ -52,10 +52,18 @@ router.get(
 router.get(
   '/:type?/:provider?/:namespace?/:name?',
   asyncMiddleware(async (request, response) => {
-    const coordinates = utils.toEntityCoordinatesFromRequest(request)
-    return curationService.list(coordinates).then(result => response.status(200).send(result))
-  })
-)
+      const coordinates = utils.toEntityCoordinatesFromRequest(request)
+      curationService.list(coordinates).then(function(result){
+         /* HANDLE PROMISE #1 */
+         var text_file_name = "./test/fixtures/curations_dummy_data.json";
+         var json_data = readTextFile(text_file_name);
+         console.log("data=", json_data);
+         result = json_data;
+         response.status(200).send(result);
+      })
+    })
+  )
+  //return curationService.list(coordinates).then(result => response.status(200).send(result))
 
 router.patch(
   '',
@@ -88,6 +96,18 @@ let curationService
 function setup(service) {
   curationService = service
   return router
+}
+
+//synchronous version
+function readTextFile(file) {
+    var fs=require('fs');
+    try{
+      var data=fs.readFileSync(file, 'utf8');
+      var json=JSON.parse(data);
+    } catch(e) {
+      console.log('Error', e.stack);
+    }
+    return json;
 }
 
 module.exports = setup
