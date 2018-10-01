@@ -54,8 +54,41 @@ router.get(
   asyncMiddleware(async (request, response) => {
       const coordinates = utils.toEntityCoordinatesFromRequest(request)
       curationService.list(coordinates).then(function(result){
+
+        // access the request url and method
+        const { method, url } = request;
+        console.log('method', method);
+        console.log('url', url);
+
+        //trim and split the request url for processing
+        let trimmed = url.trim();
+        let myStringArray = trimmed.split("/");
+        let text_file_name = "./test/fixtures/dummy_data_curations_"
+
+        //iterate through the 'url array' and create a filename string from it
+        const arrayLength = myStringArray.length;
+        for (var i = 0; i < arrayLength; i++) {
+              if((myStringArray[i] === "-") || (myStringArray[i] === "")) {
+                //strip out the spaces and dashes
+                console.log('space or dash stripped out');
+              }
+              else {
+                if(i < arrayLength) {
+                  text_file_name = text_file_name + myStringArray[i] + "_";
+                }
+                else{
+                  text_file_name = text_file_name + myStringArray[i];
+                }
+              }
+        }
+
+        //replace the last occurence of the underscore
+        text_file_name = text_file_name.replace(/_([^_]*)$/,'$1'); //a_bc
+        text_file_name = text_file_name + ".json";
+
+        console.log('text_file_name = ', text_file_name);
+
          /* HANDLE PROMISE #1 */
-         const text_file_name = "./test/fixtures/curations_dummy_data.json";
          const json_data = readTextFile(text_file_name);
          console.log("data=", json_data);
          result = json_data;
@@ -101,9 +134,10 @@ function setup(service) {
 //synchronous version
 function readTextFile(file) {
     const fs=require('fs');
+    let json;
     try{
       const data=fs.readFileSync(file, 'utf8');
-      const json=JSON.parse(data);
+      json=JSON.parse(data);
     } catch(e) {
       console.log('Error', e.stack);
     }
