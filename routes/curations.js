@@ -55,8 +55,8 @@ router.get(
       const coordinates = utils.toEntityCoordinatesFromRequest(request)
       curationService.list(coordinates).then(function(result){
          /* HANDLE PROMISE #1 */
-         var text_file_name = "./test/fixtures/curations_dummy_data.json";
-         var json_data = readTextFile(text_file_name);
+         const text_file_name = "./test/fixtures/curations_dummy_data.json";
+         const json_data = readTextFile(text_file_name);
          console.log("data=", json_data);
          result = json_data;
          response.status(200).send(result);
@@ -100,10 +100,10 @@ function setup(service) {
 
 //synchronous version
 function readTextFile(file) {
-    var fs=require('fs');
+    const fs=require('fs');
     try{
-      var data=fs.readFileSync(file, 'utf8');
-      var json=JSON.parse(data);
+      const data=fs.readFileSync(file, 'utf8');
+      const json=JSON.parse(data);
     } catch(e) {
       console.log('Error', e.stack);
     }
