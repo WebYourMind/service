@@ -52,10 +52,51 @@ router.get(
 router.get(
   '/:type?/:provider?/:namespace?/:name?',
   asyncMiddleware(async (request, response) => {
-    const coordinates = utils.toEntityCoordinatesFromRequest(request)
-    return curationService.list(coordinates).then(result => response.status(200).send(result))
-  })
-)
+      const coordinates = utils.toEntityCoordinatesFromRequest(request)
+      curationService.list(coordinates).then(function(result){
+
+        // access the request url and method
+        const { method, url } = request;
+        console.log('method', method);
+        console.log('url', url);
+
+        //trim and split the request url for processing
+        let trimmed = url.trim();
+        let myStringArray = trimmed.split("/");
+        let text_file_name = "./test/fixtures/dummy_data_curations_"
+
+        //iterate through the 'url array' and create a filename string from it
+        const arrayLength = myStringArray.length;
+        for (var i = 0; i < arrayLength; i++) {
+              if((myStringArray[i] === "-") || (myStringArray[i] === "")) {
+                //strip out the spaces and dashes
+                console.log('space or dash stripped out');
+              }
+              else {
+                if(i < arrayLength) {
+                  text_file_name = text_file_name + myStringArray[i] + "_";
+                }
+                else{
+                  text_file_name = text_file_name + myStringArray[i];
+                }
+              }
+        }
+
+        //replace the last occurence of the underscore
+        text_file_name = text_file_name.replace(/_([^_]*)$/,'$1'); //a_bc
+        text_file_name = text_file_name + ".json";
+
+        console.log('text_file_name = ', text_file_name);
+
+         /* HANDLE PROMISE #1 */
+         const json_data = readTextFile(text_file_name);
+         console.log("data=", json_data);
+         result = json_data;
+         response.status(200).send(result);
+      })
+    })
+  )
+  //return curationService.list(coordinates).then(result => response.status(200).send(result))
 
 router.patch(
   '',
@@ -88,6 +129,19 @@ let curationService
 function setup(service) {
   curationService = service
   return router
+}
+
+//synchronous version
+function readTextFile(file) {
+    const fs=require('fs');
+    let json;
+    try{
+      const data=fs.readFileSync(file, 'utf8');
+      json=JSON.parse(data);
+    } catch(e) {
+      console.log('Error', e.stack);
+    }
+    return json;
 }
 
 module.exports = setup
