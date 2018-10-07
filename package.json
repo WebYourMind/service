@@ -60,7 +60,7 @@
     "eslint": "^4.13.1",
     "mocha": "^4.0.1",
     "node-mocks-http": "^1.6.7",
-    "nodemon": "^1.18.2",
+    "nodemon": "^1.18.4",
     "proxyquire": "^2.0.1",
     "sinon": "^4.2.2"
   }

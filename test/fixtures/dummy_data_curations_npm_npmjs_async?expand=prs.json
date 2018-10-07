@@ -1,0 +1,23 @@
+{
+  "described": "...",
+  "licensed": "...",
+  "coordinates": "...",
+  "_meta": {
+    "schema": "1.1.0",
+    "pending": [
+      {
+        "number": 23,
+        "title":  "some more cool changes",
+        "contributor": "jeffmcaffer"
+      }
+    ],
+    "merged": [
+      {
+        "number": 3,
+        "title":  "some cool changes",
+        "contributor": "jeffmcaffer",
+        "curator": "willbar"
+      }
+    ]
+  }
+}

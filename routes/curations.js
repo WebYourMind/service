@@ -57,20 +57,29 @@ router.get(
 
         // access the request url and method
         const { method, url } = request;
+
         console.log('method', method);
         console.log('url', url);
+
+        // access the query params - if there are some
+        let urlParams = new URLSearchParams(url);
+        let myParam = urlParams.get('expand');
+        console.log('myParam value = ', myParam )
 
         //trim and split the request url for processing
         let trimmed = url.trim();
         let myStringArray = trimmed.split("/");
         let text_file_name = "./test/fixtures/dummy_data_curations_"
 
+        console.log('myStringArray =' , myStringArray);
+
         //iterate through the 'url array' and create a filename string from it
         const arrayLength = myStringArray.length;
         for (var i = 0; i < arrayLength; i++) {
-              if((myStringArray[i] === "-") || (myStringArray[i] === "")) {
+              if((myStringArray[i] === "-") || (myStringArray[i] === "")
+                || (myStringArray[i] === "?") || (myStringArray[i] === "=")) {
                 //strip out the spaces and dashes
-                console.log('space or dash stripped out');
+                console.log('spaces, dashes or ?s stripped out');
               }
               else {
                 if(i < arrayLength) {
@@ -129,6 +138,11 @@ let curationService
 function setup(service) {
   curationService = service
   return router
+}
+
+
+function getDataFromDummyJson() {
+
 }
 
 //synchronous version
