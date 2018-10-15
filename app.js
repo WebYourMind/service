@@ -72,6 +72,60 @@ const definitions = require('./routes/definitions')(definitionService)
 const attachments = require('./routes/attachments')(harvestStore)
 
 const appLogger = console // @todo add real logger
+
+/************************** TM -start edit */
+        'use strict'
+        var winston = require('winston'),
+        const { AzureApplicationInsightsLogger } = require('winston-azure-application-insights');
+        // Create an app insights client with the given key
+        winston.add(new AzureApplicationInsightsLogger({
+            key: "<YOUR_INSTRUMENTATION_KEY_HERE>"
+        }));
+
+        aiLogger = require('./node_modules/winston-azure-application-insights/lib/winston-azure-application-insights').AzureApplicationInsightsLogger;
+        aiLogger.add(new winston.transports.Console());
+        //aiLogger.add(new logger.transports.Console, { colorize: true });
+        //aiLogger.add(new winston.transports.Console());
+
+        const new_logger = winston.createLogger({
+            transports: [
+                new winston.transports.MongoDB({
+                    db: 'mongodb://localhost:27017/test',
+                    collection: 'log',
+                    level: 'info',
+                    storeHost: true,
+                    capped: true,
+                })
+            ]
+        });
+
+
+        winston.add(aiLogger);
+        winston.info("Let's log something new...");
+        winston.error("This is an error log!");
+        winston.warn("And this is a warning message.");
+        winston.log("info", "Log with some metadata", {
+          question: "Answer to the Ultimate Question of Life, the Universe, and Everything",
+          answer: 42
+        });
+
+        function ExtendedError(message, arg1, arg2) {
+          this.message = message;
+          this.name = "ExtendedError";
+          this.arg1 = arg1;
+          this.arg2 = arg2;
+          Error.captureStackTrace(this, ExtendedError);
+        }
+
+        ExtendedError.prototype = Object.create(Error.prototype);
+        ExtendedError.prototype.constructor = ExtendedError;
+        winston.error("Log extended errors with properites", new ExtendedError("some error", "answer", 42));
+
+/************************** TM - END edit */
+
+
+
+
 const githubSecret = config.webhook.githubSecret
 const crawlerSecret = config.webhook.crawlerSecret
 const webhook = require('./routes/webhook')(curationService, definitionService, appLogger, githubSecret, crawlerSecret)
