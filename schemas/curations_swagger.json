@@ -1,777 +1,779 @@
-"definitions": {
-	"$id": {
-		"type": "string"
-	},
-	"$schema": {
-		"type": "string"
-	},
-	"title": {
-		"type": "string"
-	},
-	"required": {
-		"type": "array",
-		"items": {
-			"type": "string"
-		}
-	},
-	"type": {
-		"type": "string"
-	},
-	"additionalProperties": {
-		"type": "boolean"
-	},
-	"properties": {
-		"type": "object",
-		"properties": {
-			"coordinates": {
-				"type": "object",
-				"properties": {
-					"$ref": {
-						"type": "string"
-					}
-				}
-			},
-			"revisions": {
-				"type": "object",
-				"properties": {
-					"$ref": {
-						"type": "string"
-					}
-				}
-			}
-		}
-	},
-	"errorMessage": {
-		"type": "object",
-		"properties": {
-			"required": {
-				"type": "string"
-			},
-			"type": {
-				"type": "string"
-			},
-			"additionalProperties": {
-				"type": "string"
-			}
-		}
-	},
+{
 	"definitions": {
-		"type": "object",
+		"$id": {
+			"type": "string"
+		},
+		"$schema": {
+			"type": "string"
+		},
+		"title": {
+			"type": "string"
+		},
+		"required": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"type": {
+			"type": "string"
+		},
+		"additionalProperties": {
+			"type": "boolean"
+		},
 		"properties": {
-			"type": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"enum": {
-						"type": "array",
-						"items": {
+			"type": "object",
+			"properties": {
+				"coordinates": {
+					"type": "object",
+					"properties": {
+						"$ref": {
 							"type": "string"
 						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"enum": {
-								"type": "string"
-							},
-							"type": {
-								"type": "string"
-							}
-						}
 					}
-				}
-			},
-			"provider": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"enum": {
-						"type": "array",
-						"items": {
+				},
+				"revisions": {
+					"type": "object",
+					"properties": {
+						"$ref": {
 							"type": "string"
 						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"enum": {
-								"type": "string"
-							},
-							"type": {
-								"type": "string"
-							}
-						}
 					}
 				}
-			},
-			"coordinates": {
-				"type": "object",
-				"properties": {
-					"required": {
-						"type": "array",
-						"items": {
+			}
+		},
+		"errorMessage": {
+			"type": "object",
+			"properties": {
+				"required": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string"
+				},
+				"additionalProperties": {
+					"type": "string"
+				}
+			}
+		},
+		"definitions": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "object",
+					"properties": {
+						"type": {
 							"type": "string"
-						}
-					},
-					"properties": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							},
-							"provider": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							},
-							"namespace": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "array",
-										"items": {
-											"type": "string"
-										}
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							},
-							"name": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							}
-						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"required": {
+						},
+						"enum": {
+							"type": "array",
+							"items": {
 								"type": "string"
 							}
-						}
-					}
-				}
-			},
-			"revisions": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"additionalProperties": {
-						"type": "boolean"
-					},
-					"patternProperties": {
-						"type": "object",
-						"properties": {
-							"^.+$": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"additionalProperties": {
-								"type": "string"
-							},
-							"patternProperties": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			},
-			"revision": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"additionalProperties": {
-						"type": "boolean"
-					},
-					"properties": {
-						"type": "object",
-						"properties": {
-							"described": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							},
-							"licensed": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							},
-							"files": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"additionalProperties": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			},
-			"described": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"additionalProperties": {
-						"type": "boolean"
-					},
-					"properties": {
-						"type": "object",
-						"properties": {
-							"facets": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"additionalProperties": {
-										"type": "boolean"
-									},
-									"properties": {
-										"type": "object",
-										"properties": {
-											"data": {
-												"type": "object",
-												"properties": {
-													"$ref": {
-														"type": "string"
-													}
-												}
-											},
-											"dev": {
-												"type": "object",
-												"properties": {
-													"$ref": {
-														"type": "string"
-													}
-												}
-											},
-											"doc": {
-												"type": "object",
-												"properties": {
-													"$ref": {
-														"type": "string"
-													}
-												}
-											},
-											"examples": {
-												"type": "object",
-												"properties": {
-													"$ref": {
-														"type": "string"
-													}
-												}
-											},
-											"tests": {
-												"type": "object",
-												"properties": {
-													"$ref": {
-														"type": "string"
-													}
-												}
-											}
-										}
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											},
-											"additionalProperties": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							},
-							"sourceLocation": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							},
-							"projectWebsite": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							},
-							"issueTracker": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							},
-							"releaseDate": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"format": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											},
-											"format": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							}
-						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"additionalProperties": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			},
-			"globList": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"items": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"errorMessage": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									}
-								}
-							}
-						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			},
-			"sourceLocation": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"required": {
-						"type": "array",
-						"items": {
-							"type": "string"
-						}
-					},
-					"additionalProperties": {
-						"type": "boolean"
-					},
-					"properties": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							},
-							"provider": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
-									}
-								}
-							},
-							"namespace": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							},
-							"name": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							},
-							"url": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"format": {
-										"type": "string"
-									},
-									"description": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											},
-											"format": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							},
-							"revision": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							},
-							"path": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"errorMessage": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											}
-										}
-									}
-								}
-							}
-						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"required": {
-								"type": "string"
-							},
-							"additionalProperties": {
-								"type": "string"
-							}
-						}
-					}
-				}
-			},
-			"files": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"items": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"required": {
-								"type": "array",
-								"items": {
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"enum": {
+									"type": "string"
+								},
+								"type": {
 									"type": "string"
 								}
-							},
-							"additionalProperties": {
-								"type": "boolean"
-							},
+							}
+						}
+					}
+				},
+				"provider": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"enum": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"errorMessage": {
+							"type": "object",
 							"properties": {
-								"type": "object",
-								"properties": {
-									"path": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											},
-											"description": {
-												"type": "string"
-											},
-											"errorMessage": {
-												"type": "object",
-												"properties": {
-													"type": {
-														"type": "string"
-													}
-												}
-											}
+								"enum": {
+									"type": "string"
+								},
+								"type": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"coordinates": {
+					"type": "object",
+					"properties": {
+						"required": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
 										}
-									},
-									"license": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											},
-											"description": {
-												"type": "string"
-											},
-											"errorMessage": {
-												"type": "object",
-												"properties": {
-													"type": {
-														"type": "string"
-													}
-												}
-											}
+									}
+								},
+								"provider": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
 										}
-									},
-									"attributions": {
-										"type": "object",
-										"properties": {
-											"type": {
-												"type": "string"
-											},
-											"description": {
-												"type": "string"
-											},
+									}
+								},
+								"namespace": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "array",
 											"items": {
-												"type": "object",
-												"properties": {
-													"type": {
-														"type": "string"
-													},
-													"errorMessage": {
-														"type": "object",
-														"properties": {
-															"type": {
-																"type": "string"
-															}
+												"type": "string"
+											}
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"name": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"required": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"revisions": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"additionalProperties": {
+							"type": "boolean"
+						},
+						"patternProperties": {
+							"type": "object",
+							"properties": {
+								"^.+$": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"additionalProperties": {
+									"type": "string"
+								},
+								"patternProperties": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"revision": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"additionalProperties": {
+							"type": "boolean"
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"described": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
+										}
+									}
+								},
+								"licensed": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
+										}
+									}
+								},
+								"files": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"additionalProperties": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"described": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"additionalProperties": {
+							"type": "boolean"
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"facets": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"type": "boolean"
+										},
+										"properties": {
+											"type": "object",
+											"properties": {
+												"data": {
+													"type": "object",
+													"properties": {
+														"$ref": {
+															"type": "string"
+														}
+													}
+												},
+												"dev": {
+													"type": "object",
+													"properties": {
+														"$ref": {
+															"type": "string"
+														}
+													}
+												},
+												"doc": {
+													"type": "object",
+													"properties": {
+														"$ref": {
+															"type": "string"
+														}
+													}
+												},
+												"examples": {
+													"type": "object",
+													"properties": {
+														"$ref": {
+															"type": "string"
+														}
+													}
+												},
+												"tests": {
+													"type": "object",
+													"properties": {
+														"$ref": {
+															"type": "string"
 														}
 													}
 												}
-											},
-											"errorMessage": {
-												"type": "object",
-												"properties": {
-													"type": {
-														"type": "string"
-													}
+											}
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"additionalProperties": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"sourceLocation": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
+										}
+									}
+								},
+								"projectWebsite": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"issueTracker": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"releaseDate": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"format": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"format": {
+													"type": "string"
 												}
 											}
 										}
 									}
 								}
-							},
-							"errorMessage": {
-								"type": "object",
-								"properties": {
-									"type": {
-										"type": "string"
-									},
-									"required": {
-										"type": "string"
-									},
-									"additionalProperties": {
-										"type": "string"
-									}
+							}
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"additionalProperties": {
+									"type": "string"
 								}
 							}
 						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							}
-						}
 					}
-				}
-			},
-			"licensed": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"additionalProperties": {
-						"type": "boolean"
-					},
+				},
+				"globList": {
+					"type": "object",
 					"properties": {
-						"type": "object",
-						"properties": {
-							"declared": {
-								"type": "object",
-								"properties": {
-									"$ref": {
-										"type": "string"
+						"type": {
+							"type": "string"
+						},
+						"items": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"errorMessage": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										}
 									}
 								}
 							}
-						}
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"additionalProperties": {
-								"type": "string"
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								}
 							}
 						}
 					}
-				}
-			},
-			"declared": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string"
-					},
-					"errorMessage": {
-						"type": "object",
-						"properties": {
-							"type": {
+				},
+				"sourceLocation": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"required": {
+							"type": "array",
+							"items": {
 								"type": "string"
+							}
+						},
+						"additionalProperties": {
+							"type": "boolean"
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
+										}
+									}
+								},
+								"provider": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
+										}
+									}
+								},
+								"namespace": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"name": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"url": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"format": {
+											"type": "string"
+										},
+										"description": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"format": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"revision": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								},
+								"path": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"errorMessage": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"required": {
+									"type": "string"
+								},
+								"additionalProperties": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"files": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"items": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"required": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"additionalProperties": {
+									"type": "boolean"
+								},
+								"properties": {
+									"type": "object",
+									"properties": {
+										"path": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"description": {
+													"type": "string"
+												},
+												"errorMessage": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														}
+													}
+												}
+											}
+										},
+										"license": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"description": {
+													"type": "string"
+												},
+												"errorMessage": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														}
+													}
+												}
+											}
+										},
+										"attributions": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"description": {
+													"type": "string"
+												},
+												"items": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"errorMessage": {
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												},
+												"errorMessage": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														}
+													}
+												}
+											}
+										}
+									}
+								},
+								"errorMessage": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"required": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"licensed": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"additionalProperties": {
+							"type": "boolean"
+						},
+						"properties": {
+							"type": "object",
+							"properties": {
+								"declared": {
+									"type": "object",
+									"properties": {
+										"$ref": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								},
+								"additionalProperties": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"declared": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string"
+						},
+						"errorMessage": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string"
+								}
 							}
 						}
 					}

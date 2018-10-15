@@ -19,10 +19,6 @@ const passport = require('passport')
 const swaggerUi = require('swagger-ui-express')
 const fs = require('fs')
 const yaml = require('js-yaml')
-//const swaggerDoc = yaml.safeLoad(fs.readFileSync('./routes/swagger.yaml'))
-const swaggerDoc = require('./schemas/curations_swagger.json')
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const config = require('./lib/config')
 const configMiddleware = require('./middleware/config')
@@ -94,6 +90,9 @@ app.use(cachingMiddleware(caching()))
 
 app.use(logger('dev'))
 app.use(configMiddleware)
+
+const swaggerDoc = require('./schemas/curations_swagger.json')
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 app.use('/webhook', bodyParser.raw({ limit: '5mb', type: '*/*' }), webhook)
 
