@@ -91,7 +91,7 @@ app.use(cachingMiddleware(caching()))
 app.use(logger('dev'))
 app.use(configMiddleware)
 
-const swaggerDoc = require('./schemas/curations_swagger.json')
+const swaggerDoc = require('./schemas/curation.json')
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 app.use('/webhook', bodyParser.raw({ limit: '5mb', type: '*/*' }), webhook)
