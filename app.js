@@ -91,7 +91,8 @@ app.use(cachingMiddleware(caching()))
 app.use(logger('dev'))
 app.use(configMiddleware)
 
-const swaggerDoc = require('./schemas/curation.json')
+const swaggerDoc = yaml.safeLoad(fs.readFileSync('./routes/swagger.yaml'))
+//const swaggerDoc = require('./schemas/curation.json')
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 app.use('/webhook', bodyParser.raw({ limit: '5mb', type: '*/*' }), webhook)
