@@ -20,8 +20,6 @@ const swaggerUi = require('swagger-ui-express')
 const fs = require('fs')
 const yaml = require('js-yaml')
 
-const swaggerDoc = yaml.safeLoad(fs.readFileSync('./routes/swagger.yaml'))
-
 const config = require('./lib/config')
 const configMiddleware = require('./middleware/config')
 const githubMiddleware = require('./middleware/github')

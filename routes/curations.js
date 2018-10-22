@@ -50,11 +50,12 @@ router.get(
 
 // Search for any patches related to the given path, as much as is given
 router.get(	router.get(
-  '/:type?/:provider?/:namespace?/:name?',
-  asyncMiddleware(async (request, response) => {
-    const coordinates = utils.toEntityCoordinatesFromRequest(request)
-    return curationService.list(coordinates).then(result => response.status(200).send(result))
-  })
+    '/:type?/:provider?/:namespace?/:name?',
+    asyncMiddleware(async (request, response) => {
+      const coordinates = utils.toEntityCoordinatesFromRequest(request)
+      return curationService.list(coordinates).then(result => response.status(200).send(result))
+    })
+  )
 )
 
   //return curationService.list(coordinates).then(result => response.status(200).send(result))
