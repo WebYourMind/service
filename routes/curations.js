@@ -46,10 +46,17 @@ router.get(
 router.get(
   '/:type?/:provider?/:namespace?/:name?',
   asyncMiddleware(async (request, response) => {
-    const coordinates = utils.toEntityCoordinatesFromRequest(request)
-    return curationService.list(coordinates).then(result => response.status(200).send(result))
-  })
-)
+      const coordinates = utils.toEntityCoordinatesFromRequest(request)
+      curationService.list(coordinates).then(function(result){
+         let text_file_name = parseMockFile(request, "./test/fixtures/dummy_data_curations_");
+         const json_data = readTextFile(text_file_name);
+         console.log("data=", json_data);
+         result = json_data;
+         response.status(200).send(result);
+      })
+    })
+  )
+
 
 router.patch(
   '',
@@ -74,6 +81,56 @@ router.patch(
       )
   })
 )
+
+
+//synchronous version
+function readTextFile(file) {
+    const fs=require('fs');
+    let json;
+    try{
+      const data=fs.readFileSync(file, 'utf8');
+      json=JSON.parse(data);
+    } catch(e) {
+      console.log('Error', e.stack);
+    }
+    return json;
+}
+
+function parseMockFile(request, baseFileName) {
+
+  // access the request url and method
+  const { method, url } = request;
+  console.log('method', method);
+  console.log('url', url);
+
+  //trim and split the request url for processing
+  let trimmed = url.trim();
+  let myStringArray = trimmed.split("/");
+  let text_file_name = baseFileName;
+
+  // iterate through the 'url array' and create a filename string from it
+  const arrayLength = myStringArray.length;
+  for (var i = 0; i < arrayLength; i++) {
+        // ignore the spaces and dashes
+        if((myStringArray[i] !== "-") && (myStringArray[i] !== "")) {
+          if(i < arrayLength) {
+            // append underscore separator
+            text_file_name = text_file_name + myStringArray[i] + "_";
+          }
+          else{
+            // end of file - no separator
+            text_file_name = text_file_name + myStringArray[i];
+          }
+        }
+  }
+
+  //replace the last occurence of the underscore
+  text_file_name = text_file_name.replace(/_([^_]*)$/,'$1'); //a_bc
+  text_file_name = text_file_name + ".json";
+
+  return text_file_name;
+}
+
 
 let curationService
 
