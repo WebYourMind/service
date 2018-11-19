@@ -13,8 +13,7 @@ router.get(
     const url = `https://rubygems.org/api/v1/versions/${name}.json`
     const answer = await requestPromise({ url, method: 'GET', json: true })
     const result = answer.map(entry => entry.number)
-    var unique = utils.uniqueOnly(result)
-    return response.status(200).send(unique)
+    return response.status(200).send(utils.filterForUniqueItemsOnly(result))
   })
 )
 

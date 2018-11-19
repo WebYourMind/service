@@ -14,8 +14,7 @@ router.get(
     const answer = await requestPromise({ url, method: 'GET', json: true })
     const result = answer && answer.releases ? Object.keys(answer.releases) : []
     result.reverse()
-    const unique = utils.uniqueOnly(result)
-    return response.status(200).send(unique)
+    return response.status(200).send(utils.filterForUniqueItemsOnly(result))
   })
 )
 
