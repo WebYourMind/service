@@ -6,7 +6,7 @@ const SuggestionService = require('../../business/suggestionService')
 const EntityCoordinates = require('../../lib/entityCoordinates')
 const { setIfValue } = require('../../lib/utils')
 const moment = require('moment')
-const { get } = require('lodash')
+const { get, map } = require('lodash')
 
 const testCoordinates = EntityCoordinates.fromString('npm/npmjs/-/test/10.0')
 
@@ -54,7 +54,14 @@ function createDefinition(coordinates, releaseDate, license, files) {
 }
 
 function setup(definition, others) {
-  const definitionService = { getAll: () => Promise.resolve([...others, definition]) }
-  const definitionStore = { list: () => Promise.resolve([...others, testCoordinates]) }
-  return SuggestionService(definitionService, definitionStore)
+  const definitionService = {
+    getAll: () => Promise.resolve([...others, definition]),
+    list: () => {
+      const otherCoordinates = map(others, definition =>
+        EntityCoordinates.fromObject(definition.coordinates).toString()
+      )
+      return Promise.resolve([...otherCoordinates, EntityCoordinates.fromObject(testCoordinates).toString()])
+    }
+  }
+  return SuggestionService(definitionService)
 }
