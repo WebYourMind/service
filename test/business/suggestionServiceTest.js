@@ -55,6 +55,6 @@ function createDefinition(coordinates, releaseDate, license, files) {
 
 function setup(definition, others) {
   const definitionService = { getAll: () => Promise.resolve([...others, definition]) }
-  const definitionStore = { list: () => Promise.resolve([...others, definition]) }
+  const definitionStore = { list: () => Promise.resolve([...others, testCoordinates]) }
   return SuggestionService(definitionService, definitionStore)
 }

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 const { get, set, sortBy, filter, concat } = require('lodash')
+const EntityCoordinates = require('../lib/entityCoordinates')
 
 class SuggestionService {
   constructor(definitionService, definitionStore) {
@@ -39,13 +40,18 @@ class SuggestionService {
    */
   async _getRelatedDefinitions(coordinates) {
     const related = await this.definitionStore.list(coordinates.asRevisionless(), 'definitions')
+    const relatedStr = related.map(entry => {
+      if (typeof entry === 'string') {
+        return EntityCoordinates.fromString(entry)
+      } else return entry
+    })
 
     // If the related array only has one entry then return early
-    if (Object.keys(related).length <= 1) return
-    const sortedByReleaseDate = sortBy(related, ['described.releaseDate'])
+    if (Object.keys(relatedStr).length <= 1) return
+    const sortedByReleaseDate = sortBy(relatedStr, ['described.releaseDate'])
 
     // Split the definitions into before supplied coords and those after
-    const index = sortedByReleaseDate.findIndex(entry => entry.coordinates.revision === coordinates.revision)
+    const index = sortedByReleaseDate.findIndex(entry => entry.revision === coordinates.revision)
     if (index === -1) return null
     const before = sortedByReleaseDate.slice(Math.max(index - 3, 0), index).reverse()
     const after = sortedByReleaseDate.slice(index + 1, index + 3)
