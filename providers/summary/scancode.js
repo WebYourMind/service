@@ -78,10 +78,10 @@ class ScanCodeSummarizer {
         if (!licenses.size) {
           licenses = fileLicense
             ? new Set(
-                fileLicense
-                  .filter(x => x.score >= 80)
-                  .map(license => this._createExpressionFromRule(license.matched_rule, license.spdx_license_key))
-              )
+              fileLicense
+                .filter(x => x.score >= 80)
+                .map(license => this._createExpressionFromRule(license.matched_rule, license.spdx_license_key))
+            )
             : new Set()
         }
         const licenseExpression = this._joinExpressions(licenses)
