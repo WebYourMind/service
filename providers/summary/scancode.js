@@ -74,13 +74,15 @@ class ScanCodeSummarizer {
         if (file.type !== 'file') return null
         const asserted = get(file, 'packages[0].asserted_licenses')
         const fileLicense = asserted || file.licenses
-        let licenses = new Set(fileLicense.map(x => x.license).filter(x => x))
+        let licenses = fileLicense ? new Set(fileLicense.map(x => x.license).filter(x => x)) : new Set()
         if (!licenses.size) {
-          licenses = new Set(
-            fileLicense
-              .filter(x => x.score >= 80)
-              .map(license => this._createExpressionFromRule(license.matched_rule, license.spdx_license_key))
-          )
+          licenses = fileLicense
+            ? new Set(
+                fileLicense
+                  .filter(x => x.score >= 80)
+                  .map(license => this._createExpressionFromRule(license.matched_rule, license.spdx_license_key))
+              )
+            : new Set()
         }
         const licenseExpression = this._joinExpressions(licenses)
         const result = { path: file.path }

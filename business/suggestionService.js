@@ -39,19 +39,15 @@ class SuggestionService {
    * @param {EntityCoordinates} coordinates - The entity we are looking for related defintions to
    */
   async _getRelatedDefinitions(coordinates) {
-    const related = await this.definitionStore.list(coordinates.asRevisionless(), 'definitions')
-    const relatedStr = related.map(entry => {
-      if (typeof entry === 'string') {
-        return EntityCoordinates.fromString(entry)
-      } else return entry
-    })
-
+    const related = await this.definitionService.list(coordinates.asRevisionless(), true)
     // If the related array only has one entry then return early
-    if (Object.keys(relatedStr).length <= 1) return
-    const sortedByReleaseDate = sortBy(relatedStr, ['described.releaseDate'])
-
+    if (Object.keys(related).length <= 1) return
+    const validDefinitions = await this.definitionService.getAll(
+      related.map(element => EntityCoordinates.fromString(element))
+    )
+    const sortedByReleaseDate = sortBy(validDefinitions, ['described.releaseDate'])
     // Split the definitions into before supplied coords and those after
-    const index = sortedByReleaseDate.findIndex(entry => entry.revision === coordinates.revision)
+    const index = sortedByReleaseDate.findIndex(entry => entry.coordinates.revision === coordinates.revision)
     if (index === -1) return null
     const before = sortedByReleaseDate.slice(Math.max(index - 3, 0), index).reverse()
     const after = sortedByReleaseDate.slice(index + 1, index + 3)
