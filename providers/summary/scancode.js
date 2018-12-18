@@ -24,9 +24,13 @@ class ScanCodeSummarizer {
       throw new Error('Not valid ScanCode data')
     const result = {}
     this.addDescribedInfo(result, harvested)
+    const packageInfo = this._summarizePackageInfo(harvested.content.files)
+    const licenseInfo = this._summarizeDeclaredLicenseInfo(harvested.content.files, coordinates)
+    // if source take license file as precedence, otherwise registry spec
     const declaredLicense =
-      this._summarizeDeclaredLicenseInfo(harvested.content.files, coordinates) ||
-      this._summarizePackageInfo(harvested.content.files)
+      coordinates.type === 'git' || coordinates.type === 'sourcearchive'
+        ? licenseInfo || packageInfo
+        : packageInfo || licenseInfo
     setIfValue(result, 'licensed.declared', declaredLicense)
     result.files = this._summarizeFileInfo(harvested.content.files)
     return result
@@ -73,7 +77,7 @@ class ScanCodeSummarizer {
       .map(file => {
         if (file.type !== 'file') return null
         const asserted = get(file, 'packages[0].asserted_licenses')
-        const fileLicense = asserted || file.licenses
+        const fileLicense = asserted || file.licenses || []
         let licenses = new Set(fileLicense.map(x => x.license).filter(x => x))
         if (!licenses.size) {
           licenses = new Set(
