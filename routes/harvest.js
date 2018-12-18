@@ -93,8 +93,12 @@ router.post('/', permissionsCheck('harvest'), bodyParser.json(), asyncMiddleware
 async function queue(request, response) {
   const requests = Array.isArray(request.body) ? request.body : [request.body]
   if (!validator.validate('harvest', requests)) return response.status(400).send(validator.errorsText())
-  await harvestService.harvest(request.body)
-  response.sendStatus(201)
+  try {
+    await harvestService.harvest(request.body)
+    return response.sendStatus(201)
+  } catch (error) {
+    return response.status(error.statusCode).send(error.error)
+  }
 }
 
 let harvestService
