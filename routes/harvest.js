@@ -123,11 +123,13 @@ async function queue(request, response) {
   if (!validator.validate('harvest', requests)) return response.status(400).send(validator.errorsText())
   try {
     await harvestService.harvest(request.body)
-    return response.sendStatus(201)
+    return response.status(201).send({ message: 'The required component has been harvested' })
   } catch (error) {
     switch (error.message) {
       case 'Forbidden':
-        return response.status(403).send({ message: 'You are not allowed to execute this operation' })
+        return response
+          .status(403)
+          .send({ error: { code: 403, message: 'You are not allowed to execute this operation' } })
       default:
         return response.sendStatus(500)
     }
