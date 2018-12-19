@@ -94,8 +94,7 @@ async function queue(request, response) {
   const requests = Array.isArray(request.body) ? request.body : [request.body]
   if (!validator.validate('harvest', requests)) return response.status(400).send(validator.errorsText())
   try {
-    const result = await harvestService.harvest(request.body)
-    console.log(result)
+    await harvestService.harvest(request.body)
     return response.sendStatus(201)
   } catch (error) {
     switch (error.message) {
