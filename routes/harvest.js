@@ -94,10 +94,16 @@ async function queue(request, response) {
   const requests = Array.isArray(request.body) ? request.body : [request.body]
   if (!validator.validate('harvest', requests)) return response.status(400).send(validator.errorsText())
   try {
-    await harvestService.harvest(request.body)
+    const result = await harvestService.harvest(request.body)
+    console.log(result)
     return response.sendStatus(201)
   } catch (error) {
-    return response.status(error.statusCode).send(error.error)
+    switch (error.message) {
+      case 'Forbidden':
+        return response.status(403).send({ message: 'You are not allowed to execute this operation' })
+      default:
+        return response.sendStatus(500)
+    }
   }
 }
 
