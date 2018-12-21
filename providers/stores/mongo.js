@@ -5,6 +5,7 @@ const MongoClient = require('mongodb').MongoClient
 const promiseRetry = require('promise-retry')
 const EntityCoordinates = require('../../lib/entityCoordinates')
 const logger = require('../logging/logger')
+const sanitize = require('mongo-sanitize')
 
 class MongoStore {
   constructor(options) {
@@ -35,14 +36,22 @@ class MongoStore {
    * @returns A list of matching coordinates i.e. [ 'npm/npmjs/-/JSONStream/1.3.3' ]
    */
   async list(coordinates, expand = null) {
-    // TODO protect this regex from DoS attacks
-    const list = await this.collection.find(
-      { _id: new RegExp('^' + this._getId(coordinates)) },
-      { projection: { _id: expand === 'definitions' ? 0 : 1 } }
-    )
-    const result = await list.toArray()
-    if (expand === 'definitions') return result
-    return result.map(entry => entry._id)
+    // To protect this regex from DoS attacks use the sanitize function to strip out
+    // any keys that start with '$' in the input, so you can pass it to MongoDB without
+    // worrying about malicious users overwriting query selectors.
+    try {
+      const regex = new RegExp('^' + this._getId(coordinates))
+      const safeQuery = sanitize(regex)
+      const list = await this.collection.find(
+        { _id: safeQuery },
+        { projection: { _id: expand === 'definitions' ? 0 : 1 } }
+      )
+      const result = await list.toArray()
+      if (expand === 'definitions') return result
+      return result.map(entry => entry._id)
+    } catch (error) {
+      throw new Error('Error retrieving components from the Store')
+    }
   }
 
   /**
