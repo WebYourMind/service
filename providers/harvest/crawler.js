@@ -21,13 +21,27 @@ class CrawlingHarvester {
         policy: entry.policy
       }
     })
-    return requestPromise({
-      url: `${this.options.url}/requests`,
-      method: 'POST',
-      body,
-      headers,
-      json: true
-    })
+    try {
+      const response = await requestPromise({
+        url: `${this.options.url}/requests`,
+        method: 'POST',
+        body,
+        headers,
+        json: true
+      })
+      if (response.statusCode === '200') return
+    } catch (error) {
+      this.logger.info('failed to harvest from crawling service', {
+        crawlerError: error.error,
+        coordinates: spec.toString()
+      })
+      switch (error.statusCode) {
+        case 403:
+          throw new Error('Forbidden')
+        default:
+          throw new Error('Unable to queue request')
+      }
+    }
   }
 }
 
