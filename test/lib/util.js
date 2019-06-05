@@ -114,16 +114,16 @@ describe('Utils mergeDefinitions', () => {
     expect(base.files[1].license).to.eq('GPL')
   })
 
-  it('overrides NOASSERTION', () => {
+  it('does not override NOASSERTION', () => {
     const base = {
       licensed: { declared: 'NOASSERTION' },
       files: [{ path: '1.txt', license: 'NOASSERTION' }]
     }
     const newDefinition = { licensed: { declared: 'MIT' }, files: [{ path: '1.txt', license: 'GPL-3.0' }] }
     utils.mergeDefinitions(base, newDefinition)
-    expect(base.licensed.declared).to.eq('MIT')
+    expect(base.licensed.declared).to.eq('MIT AND NOASSERTION')
     expect(base.files.length).to.eq(1)
-    expect(base.files[0].license).to.eq('GPL-3.0')
+    expect(base.files[0].license).to.eq('GPL-3.0 AND NOASSERTION')
   })
 
   it('merges files correctly', () => {

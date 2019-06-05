@@ -141,7 +141,17 @@ describe('SPDX utility functions', () => {
       [['MIT AND ISC', '(MIT OR GPL-2.0) AND ISC'], '(GPL-2.0 AND ISC) OR (ISC AND MIT)'],
       [['MIT AND NOASSERTION', 'MIT'], 'MIT OR (MIT AND NOASSERTION)'],
       [['MIT OR NOASSERTION', 'MIT'], 'MIT OR NOASSERTION'],
-      [['NOASSERTION OR JUNK', 'MIT'], 'MIT OR NOASSERTION']
+      [['NOASSERTION OR JUNK', 'MIT'], 'MIT OR NOASSERTION'],
+      [['NOASSERTION', 'MIT'], 'MIT OR NOASSERTION'],
+      [['NOASSERTION', 'NOASSERTION'], 'NOASSERTION'],
+      [['MIT OR NOASSERTION', 'NOASSERTION'], 'MIT OR NOASSERTION'],
+      [['Ruby OR NOASSERTION', 'JUNK'], 'NOASSERTION OR Ruby'],
+      [['(MIT AND BSD-3-Clause) OR (Apache-2.0 AND ISC)', 'GPL-2.0'], 
+        'GPL-2.0 OR (Apache-2.0 AND ISC) OR (BSD-3-Clause AND MIT)'],
+      [['Ruby OR (NOASSERTION OR NOASSERTION)', 'MIT'],
+        'MIT OR NOASSERTION OR Ruby'],
+      [['Ruby', '(NOASSERTION OR NOASSERTION)'],
+        'NOASSERTION OR Ruby']
     ])
 
     data.forEach((expected, input) => {
