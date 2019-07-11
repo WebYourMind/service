@@ -291,6 +291,11 @@ paths:
             type: boolean
           description: The direction to sort the results by
         - in: query
+          name: pendingCurations
+          schema:
+            type: boolean
+          description: Sort the results by pending curations
+        - in: query
           name: continuationToken
           schema:
             type: string
