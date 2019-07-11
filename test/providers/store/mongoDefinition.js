@@ -152,7 +152,9 @@ describe('Mongo Definition store', () => {
       [{ sort: 'describedScore' }, { 'described.score.total': 1 }],
       [{ sort: 'effectiveScore' }, { 'scores.effective': 1 }],
       [{ sort: 'toolScore' }, { 'scores.tool': 1 }],
-      [{ sort: 'revision' }, { 'coordinates.revision': 1 }]
+      [{ sort: 'revision' }, { 'coordinates.revision': 1 }],
+      [{ sort: 'revision', pendingCurations: true }, { 'coordinates.revision': 1 }],
+      [{ sort: 'revision', pendingCurations: false }, { 'coordinates.revision': 1 }]
     ])
     data.forEach((expected, input) => {
       const result = store._buildSort(input)
