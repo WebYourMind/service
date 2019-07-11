@@ -120,6 +120,13 @@
         "type": "sortDesc must be a bool"
       }
     },
+    "pendingCurations": {
+      "type": "boolean",
+      "description": "Whether to sort by pending curations or not. Default false.",
+      "errorMessage": {
+        "type": "pendingCurations must be a bool"
+      }
+    },
     "continuationToken": {
       "type": "string",
       "errorMessage": {
