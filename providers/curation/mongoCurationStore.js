@@ -113,7 +113,7 @@ class MongoCurationStore {
     const curations = await this.collection
       .find(this._buildStatusContributionQuery(status))
       .sort({ 'pr.number': -1 })
-      .project({ files: {} })
+      .project({ files: 0 })
       .toArray()
     return curations
   }

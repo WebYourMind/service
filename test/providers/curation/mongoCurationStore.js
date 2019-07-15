@@ -11,7 +11,8 @@ const pr = {
   number: 12,
   head: { ref: 'master', sha: '32' },
   files: [{ filename: 'curations/npm/npmjs/-/foo.yaml' }],
-  merged_at: '2018-11-13T02:44:34Z'
+  merged_at: '2018-11-13T02:44:34Z',
+  state: 'pending'
 }
 
 const curation = new Curation({
@@ -161,6 +162,18 @@ describe('Mongo Curation store', () => {
     expect(result).to.be.null
 
     await expect(service.list()).to.eventually.be.rejectedWith('must specify coordinates to list')
+  })
+
+  it('list by status pending', async () => {
+    const service = createStore()
+    await service.updateContribution(pr, [curation])
+    const result = await service.listByStatus('pending')
+    expect(service.collection.find.calledOnce).to.be.true
+    expect(service.collection.find.args[0][0]).to.deep.eq({
+      'pr.state': 'pending'
+    })
+    expect(service.collection.find().sort.args[0][0]).to.deep.eq({ 'pr.number': -1 })
+    expect(result).to.deep.eq({ files: [{ filename: 'curations/npm/npmjs/-/foo.yaml' }] })
   })
 })
 
