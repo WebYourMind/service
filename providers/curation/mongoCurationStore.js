@@ -104,11 +104,31 @@ class MongoCurationStore {
     return { curations, contributions }
   }
 
+  /**
+   * List all of the Curations by status
+   * @param {string} status - status string to look for
+   * @returns the Contributions found
+   */
+  async listByStatus(status) {
+    const curations = await this.collection
+      .find(this._buildStatusContributionQuery(status))
+      .sort({ 'pr.number': -1 })
+      .project({ files: {} })
+      .toArray()
+    return curations
+  }
+
   _getCurationId(coordinates) {
     if (!coordinates) return ''
     return EntityCoordinates.fromObject(coordinates)
       .toString()
       .toLowerCase()
+  }
+
+  _buildStatusContributionQuery(status) {
+    const result = {}
+    if (status) result['pr.state'] = status
+    return result
   }
 
   _buildContributionQuery(coordinates) {
