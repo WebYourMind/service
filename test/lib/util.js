@@ -38,11 +38,17 @@ describe('Utils latest version', () => {
       'https://www.gnu.org/licenses/gpl-3.0.html': 'GPL-3.0',
       'https://www.gnu.org/licenses/gPL-3.0.html': 'GPL-3.0',
       'https://www.gnu.org/licenses/gpl-2.0': 'GPL-2.0',
+      'http://json.org/license.html': 'JSON',
+      'http://www.json.org/license.html': 'JSON',
+      'https://json.org/license.html': 'JSON',
       'https://opensource.org/licenses/JUNK': null,
       'https://www.gnu.org/licenses/JUNK': null,
       'https://github.com/owner/repo/blob/master/LICENSE': null,
       'https://raw.github.com/owner/repo/develop/LICENSE': null,
-      'http://aka.ms/windowsazureapache2': null
+      'http://aka.ms/windowsazureapache2': null,
+      'https://tldrlegal.com/license/mit-license': 'MIT',
+      'https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)': 'Apache-2.0',
+      'https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)': 'GPL-3.0'
     }
 
     for (const licenseUrl of Object.getOwnPropertyNames(inputs)) {

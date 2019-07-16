@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 const { get, set, isArray, uniq, cloneDeep, flatten, find } = require('lodash')
-const SPDX = require('../../lib/spdx')
+const SPDX = require('@clearlydefined/spdx')
 const {
   extractDate,
   setIfValue,
@@ -132,10 +132,11 @@ class ClearlyDescribedSummarizer {
       `https://mvnrepository.com/artifact/${coordinates.namespace}/${coordinates.name}`
     )
     setIfValue(result, 'described.urls.version', `${get(result, 'described.urls.registry')}/${coordinates.revision}`)
+    const namespaceAsFolders = coordinates.namespace ? coordinates.namespace.replace(/\./g, '/') : coordinates.namespace
     setIfValue(
       result,
       'described.urls.download',
-      `http://central.maven.org/maven2/org/${coordinates.namespace}/${coordinates.name}/${coordinates.revision}/${
+      `http://central.maven.org/maven2/org/${namespaceAsFolders}/${coordinates.name}/${coordinates.revision}/${
         coordinates.name
       }-${coordinates.revision}.jar`
     )
