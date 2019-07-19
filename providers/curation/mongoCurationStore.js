@@ -17,9 +17,11 @@ class MongoCurationStore {
   initialize() {
     return promiseRetry(async retry => {
       try {
+        this.logger.info('trying mongo connection')
         this.client = await MongoClient.connect(this.options.connectionString, { useNewUrlParser: true })
         this.db = this.client.db(this.options.dbName)
         this.collection = this.db.collection(this.options.collectionName)
+        this.logger.info('connected to mongo store')
       } catch (error) {
         this.logger.info('retrying mongo connection')
         retry(error)
@@ -111,10 +113,12 @@ class MongoCurationStore {
    */
   async listByStatus(status) {
     const curations = await this.collection
-      .find(this._buildStatusContributionQuery(status))
-      .sort({ 'pr.number': -1 })
-      .project({ files: 0 })
+      .find()
+      .sort()
+      .project()
       .toArray()
+    console.log('listByStatus')
+    console.log(curations)
     return curations
   }
 
