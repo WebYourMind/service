@@ -137,7 +137,39 @@ describe('Utils mergeDefinitions', () => {
           license: 'MIT',
           attributions: ['1', '2'],
           facets: ['core'],
-          hashes: { sha1: '1', sha256: '256' },
+          hashes: { sha1: '1', sha256: '1256' },
+          natures: ['license']
+        },
+        {
+          path: '2.txt',
+          license: 'MIT',
+          attributions: ['1', '2'],
+          facets: ['core'],
+          hashes: { sha1: '2', sha256: '2256' },
+          natures: ['license']
+        },
+        {
+          path: '3.txt',
+          license: 'MIT',
+          attributions: ['1', '2'],
+          facets: ['core'],
+          hashes: { sha1: '3', sha256: '3256' },
+          natures: ['license']
+        },
+        {
+          path: '4.txt',
+          license: 'MIT',
+          attributions: ['1', '2'],
+          facets: ['core'],
+          hashes: { sha256: '2256' },
+          natures: ['license']
+        },
+        {
+          path: '5.txt',
+          license: 'MIT',
+          attributions: ['1', '2'],
+          facets: ['core'],
+          hashes: { sha256: '2256' },
           natures: ['license']
         }
       ]
@@ -145,23 +177,59 @@ describe('Utils mergeDefinitions', () => {
     const newDefinition = {
       files: [
         {
-          path: '1.txt',
+          path: '2.txt',
           license: 'GPL-3.0',
           attributions: ['1', '3'],
           facets: ['dev'],
-          hashes: { sha1: '1', sha256: '257' },
+          hashes: { sha256: '2256' },
           natures: ['test']
         }
       ]
     }
+    const expectedResult = [
+      {
+        'attributions': ['1', '2'],
+        'facets': ['core'],
+        'hashes': { 'sha1': '1', 'sha256': '1256' },
+        'license': 'MIT',
+        'natures': ['license'],
+        'path': '1.txt'
+      },
+      {
+        'attributions': ['1', '2', '3'],
+        'facets': ['core', 'dev'],
+        'hashes': { 'sha1': '2', 'sha256': '2256' },
+        'license': 'GPL-3.0 AND MIT',
+        'natures': ['license', 'test'],
+        'path': '2.txt'
+      },
+      {
+        'attributions': ['1', '2'],
+        'facets': ['core'],
+        'hashes': { 'sha1': '3', 'sha256': '3256' },
+        'license': 'MIT',
+        'natures': ['license'],
+        'path': '3.txt'
+      },
+      {
+        'attributions': ['1', '2'],
+        'facets': ['core'],
+        'hashes': { 'sha256': '2256' },
+        'license': 'GPL-3.0 AND MIT',
+        'natures': ['license'],
+        'path': '4.txt'
+      },
+      {
+        'attributions': ['1', '2'],
+        'facets': ['core'],
+        'hashes': { 'sha256': '2256' },
+        'license': 'GPL-3.0 AND MIT',
+        'natures': ['license'],
+        'path': '5.txt'
+      }
+    ]
     utils.mergeDefinitions(base, newDefinition)
-    const file = base.files[0]
-    expect(file.attributions).to.have.members(['1', '2', '3'])
-    expect(file.license).to.eq('GPL-3.0 AND MIT')
-    expect(file.facets).to.have.members(['core', 'dev'])
-    expect(file.hashes.sha1).to.eq('1')
-    expect(file.hashes.sha256).to.eq('257')
-    expect(file.natures).to.have.members(['license', 'test'])
+    expect(base.files).to.deep.equal(expectedResult)
   })
 
   it('merges described correctly', () => {
