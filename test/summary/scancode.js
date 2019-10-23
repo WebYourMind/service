@@ -246,6 +246,20 @@ describe('ScanCode summarizer', () => {
     expect(summary.files[0].license).to.eq('MIT AND NOASSERTION')
     expect(summary.files[1].license).to.eq('MIT')
   })
+
+  it('handles issue-280', () => {
+    const coordinates = {
+      'type': 'git',
+      'provider': 'github',
+      'namespace': 'rust-lang',
+      'name': 'regex',
+      'revision': '18a71d0a30a6dcdcd86d1af6dd9cb0688b89f2ee'
+    }
+    const harvested = require('../fixtures/issue-280/harvested').scancode['3.2.2']
+    const summary = Summarizer().summarize(coordinates, harvested)
+    validate(summary)
+    expect(summary.licensed.declared).to.eq('Apache-2.0 OR MIT')
+  })
 })
 
 function validate(definition) {
