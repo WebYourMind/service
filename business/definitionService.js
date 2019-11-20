@@ -30,7 +30,7 @@ const minimatch = require('minimatch')
 const extend = require('extend')
 const logger = require('../providers/logging/logger')
 const validator = require('../schemas/validator')
-const SPDX = require('../lib/spdx')
+const SPDX = require('@clearlydefined/spdx')
 const parse = require('spdx-expression-parse')
 const computeLock = require('../providers/caching/memory')({ defaultTtlSeconds: 60 * 5 /* 5 mins */ })
 
@@ -61,6 +61,7 @@ class DefinitionService {
    * @param {(number | string | Summary)} [curationSpec] - A PR number (string or number) for a proposed
    * curation or an actual curation object.
    * @param {bool} force - whether or not to force re-computation of the requested definition
+   * @param {string} expand - hints for parts to include/exclude; e.g. "-files"
    * @returns {Definition} The fully rendered definition
    */
   async get(coordinates, pr = null, force = false, expand = null) {

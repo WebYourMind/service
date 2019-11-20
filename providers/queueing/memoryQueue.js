@@ -18,9 +18,8 @@ class MemoryQueue {
    *
    * @param {string} message
    */
-  queue(message) {
+  async queue(message) {
     this.data.push({ messageText: message, dequeueCount: 0, messageId: ++this.messageId })
-    return Promise.resolve()
   }
 
   /**
@@ -39,19 +38,23 @@ class MemoryQueue {
     return this.dequeue()
   }
 
+  /** Similar to dequeue() but returns an array instead. See AzureStorageQueue.dequeueMultiple() */
+  async dequeueMultiple() {
+    return [await this.dequeue()]
+  }
+
   /**
    * Delete a recently DQ'd message from the queue
    * pass dequeue() result as the message to delete
    *
    * @param {object} message
    */
-  delete(message) {
+  async delete(message) {
     const newData = []
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].messageId !== message.original.messageId) newData.push(this.data[i])
     }
     this.data = newData
-    return Promise.resolve()
   }
 }
 

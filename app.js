@@ -71,7 +71,7 @@ function createApp(config) {
   // Circular dependency. Reach in and set the curationService's definitionService. Sigh.
   curationService.definitionService = definitionService
 
-  const curationsRoute = require('./routes/curations')(curationService)
+  const curationsRoute = require('./routes/curations')(curationService, logger)
   const definitionsRoute = require('./routes/definitions')(definitionService)
 
   const suggestionService = require('./business/suggestionService')(definitionService)
@@ -140,8 +140,10 @@ function createApp(config) {
   app.use('/origins/npm', require('./routes/originNpm')())
   app.use('/origins/maven', require('./routes/originMaven')())
   app.use('/origins/nuget', require('./routes/originNuget')())
+  app.use('/origins/composer', require('./routes/originComposer')())
   app.use('/origins/pypi', require('./routes/originPyPi')())
   app.use('/origins/rubygems', require('./routes/originRubyGems')())
+  app.use('/origins/deb', require('./routes/originDeb')())
   app.use('/harvest', harvestRoute)
   app.use(bodyParser.json())
   app.use('/curations', curationsRoute)

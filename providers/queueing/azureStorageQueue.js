@@ -4,7 +4,6 @@
 const azure = require('azure-storage')
 const logger = require('../logging/logger')
 const { promisify } = require('util')
-const base64 = require('base-64')
 
 class AzureStorageQueue {
   constructor(options) {
@@ -40,9 +39,24 @@ class AzureStorageQueue {
   async dequeue() {
     const message = await promisify(this.queueService.getMessage).bind(this.queueService)(this.options.queueName)
     if (!message) return null
-    if (message.dequeueCount <= 5) return { original: message, data: JSON.parse(base64.decode(message.messageText)) }
+    if (message.dequeueCount <= 5)
+      return { original: message, data: JSON.parse(Buffer.from(message.messageText, 'base64').toString('utf8')) }
     await this.delete({ original: message })
     return this.dequeue()
+  }
+
+  /** Similar to dequeue() but returns multiple messages to improve performance */
+  async dequeueMultiple() {
+    const messages = await promisify(this.queueService.getMessages).bind(this.queueService)(this.options.queueName, this.options.dequeueOptions)
+    if (!messages || messages.length === 0) return []
+    for (const i in messages) {
+      if (messages[i].dequeueCount <= 5) {
+        messages[i] = { original: messages[i], data: JSON.parse(Buffer.from(messages[i].messageText, 'base64').toString('utf8')) }
+      } else {
+        await this.delete({ original: messages[i] })
+      }
+    }
+    return messages
   }
 
   /**

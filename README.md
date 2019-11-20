@@ -224,7 +224,9 @@ The format of harvested data is tool-specific. Tool output is stored in the tool
 - npm
 - nuget
 - pod
+- composer
 - rubygem
+- deb
 
 ## Provider Registry
 
@@ -234,6 +236,8 @@ The format of harvested data is tool-specific. Tool output is stored in the tool
 - crates.io
 - npmjs.org
 - nuget.org
+- packagist.org
+- ftp.debian.org
 
 ## Tool Name Registry
 
